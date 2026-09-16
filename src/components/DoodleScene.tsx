@@ -21,12 +21,10 @@ function DoodleProp({ object }: { object: ObjectFrame }) {
 
 function StickFigure({ actor, t }: { actor: ActorFrame; t: number }) {
   const isWalking = actor.pose === "walk" || actor.pose === "run";
-  // Walking is a single engine-driven gait: arms and legs share exactly one phase.
   const cycleMs = actor.pose === "run" ? 220 : 360;
   const phase = ((t % cycleMs) / cycleMs) * Math.PI * 2;
-  const swing = Math.sin(phase) * (actor.pose === "run" ? 32 : 24);
+  const swing = Math.sin(phase) * (actor.pose === "run" ? 28 : 20);
   const oppositeSwing = -swing;
-  const bob = Math.max(0, Math.sin(phase * 2)) * (actor.pose === "run" ? 2.5 : 1.5);
   const showZzz = actor.feeling === "sleepy" || actor.pose === "wake" || actor.fx.includes("zzz");
   const showSweat = actor.feeling === "worried" || actor.fx.includes("sweat");
   const showBang = actor.feeling === "surprise" || actor.fx.includes("exclamation");
@@ -34,11 +32,11 @@ function StickFigure({ actor, t }: { actor: ActorFrame; t: number }) {
   const happy = actor.feeling === "happy" || actor.expression === "smile" || actor.expression === "soft";
   const face = actor.feeling === "surprise" ? "surprised" : actor.expression;
   const limbStyle = (rotation: number) => isWalking ? { transform: `rotate(${rotation}deg)` } : undefined;
-  const cssPose = isWalking ? "walk-engine" : actor.pose;
 
-  return <g className="actor" data-pose={cssPose} data-feeling={actor.feeling ?? "none"} data-face={face} style={{ opacity: actor.opacity }}>
+  return <g className="actor" data-pose={isWalking ? "walk-engine" : actor.pose} data-feeling={actor.feeling ?? "none"} data-face={face} style={{ opacity: actor.opacity }}>
     <g className="actor-movement" transform={`translate(${actor.x} ${actor.y}) scale(${actor.facing * actor.scale} ${actor.scale})`}>
-      <g className="actor-ground-correction" transform={`translate(0 ${isWalking ? -57 - bob : -57})`}>
+      {/* actor.y is the foot anchor. Never move the whole actor vertically during walking. */}
+      <g className="actor-ground-correction" transform="translate(0 -57)">
         <g className="actor-body-motion"><g className="actor-react">
           <g className="stick-head"><circle cy="-37" r="25" /><g className="stick-eyes"><circle className="doodle-fill eye" cx="-9" cy="-41" r="2.5" /><circle className="doodle-fill eye" cx="9" cy="-41" r="2.5" /></g><g className="stick-mouths"><circle className="mouth mouth-surprised" cy="-25" r="4" /><path className="mouth mouth-smile" d="M-7-28q7 8 14 0" /><path className="mouth mouth-sleepy" d="M-6-26h12" /><path className="mouth mouth-focused" d="M-5-26h10" /><path className="mouth mouth-worried" d="M-8-24q4-6 8 0t8 0" /></g>
             {showZzz ? <g className="gag gag-zzz"><text className="gag-text" x="28" y="-58">z</text><text className="gag-text" x="40" y="-72">z</text><text className="gag-text" x="54" y="-86">Z</text></g> : null}
