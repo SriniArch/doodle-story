@@ -19,7 +19,15 @@ function DoodleProp({ object }: { object: ObjectFrame }) {
   return <g className="prop prop-star doodle-star" opacity={object.opacity} transform={`translate(${x} ${y})`}><path d="M0-24 7-7l18 2-14 12 4 18L0 15l-15 10 4-18-14-12 18-2Z" /></g>;
 }
 
-function StickFigure({ actor }: { actor: ActorFrame }) {
+function StickFigure({ actor, t }: { actor: ActorFrame; t: number }) {
+  const isWalking = actor.pose === "walk" || actor.pose === "run";
+  // One engine-driven gait phase controls both arms and both legs.
+  // This intentionally replaces independent CSS clocks for the walking limbs.
+  const cycleMs = actor.pose === "run" ? 220 : 360;
+  const phase = ((t % cycleMs) / cycleMs) * Math.PI * 2;
+  const swing = Math.sin(phase) * (actor.pose === "run" ? 32 : 24);
+  const oppositeSwing = -swing;
+  const bob = Math.max(0, Math.sin(phase * 2)) * (actor.pose === "run" ? 2.5 : 1.5);
   const showZzz = actor.feeling === "sleepy" || actor.pose === "wake" || actor.fx.includes("zzz");
   const showSweat = actor.feeling === "worried" || actor.fx.includes("sweat");
   const showBang = actor.feeling === "surprise" || actor.fx.includes("exclamation");
@@ -27,10 +35,11 @@ function StickFigure({ actor }: { actor: ActorFrame }) {
   const happy = actor.feeling === "happy" || actor.expression === "smile" || actor.expression === "soft";
   const face = actor.feeling === "surprise" ? "surprised" : actor.expression;
 
+  const limbStyle = (rotation: number) => isWalking ? { transform: `rotate(${rotation}deg)` } : undefined;
+
   return <g className="actor" data-pose={actor.pose} data-feeling={actor.feeling ?? "none"} data-face={face} style={{ opacity: actor.opacity }}>
     <g className="actor-movement" transform={`translate(${actor.x} ${actor.y}) scale(${actor.facing * actor.scale} ${actor.scale})`}>
-      {/* Keep actor.y as the foot/ground anchor. Legacy artwork extends 57px below that anchor. */}
-      <g className="actor-ground-correction" transform="translate(0 -57)">
+      <g className="actor-ground-correction" transform={`translate(0 ${isWalking ? -57 - bob : -57})`}>
         <g className="actor-body-motion"><g className="actor-react">
           <g className="stick-head"><circle cy="-37" r="25" /><g className="stick-eyes"><circle className="doodle-fill eye" cx="-9" cy="-41" r="2.5" /><circle className="doodle-fill eye" cx="9" cy="-41" r="2.5" /></g><g className="stick-mouths"><circle className="mouth mouth-surprised" cy="-25" r="4" /><path className="mouth mouth-smile" d="M-7-28q7 8 14 0" /><path className="mouth mouth-sleepy" d="M-6-26h12" /><path className="mouth mouth-focused" d="M-5-26h10" /><path className="mouth mouth-worried" d="M-8-24q4-6 8 0t8 0" /></g>
             {showZzz ? <g className="gag gag-zzz"><text className="gag-text" x="28" y="-58">z</text><text className="gag-text" x="40" y="-72">z</text><text className="gag-text" x="54" y="-86">Z</text></g> : null}
@@ -38,7 +47,13 @@ function StickFigure({ actor }: { actor: ActorFrame }) {
             {showBang ? <g className="gag gag-bang"><path d="M28-78v22" /><circle className="doodle-fill" cx="28" cy="-50" r="2.2" /><path d="M42-70v14" /><circle className="doodle-fill" cx="42" cy="-50" r="1.8" /></g> : null}
             {showHearts ? <g className="gag gag-hearts"><path d="M-36-70c-4-8 8-10 10-2 2-8 14-6 10 2-3 7-10 12-10 12s-7-5-10-12Z" /></g> : null}
           </g>
-          <path className="stick-torso" d="M0-12V58" /><g className="stick-arm arm-left"><path d="M0 5-24 19" /></g><g className="stick-arm arm-right"><path d="M0 5l24 19" /></g><g className="stick-arm arm-celebrate-l"><path d="M0 4-26-18" /></g><g className="stick-arm arm-celebrate-r"><path d="M0 4l26-18" /></g><g className="stick-arm arm-sip"><path d="M0 5l17-22" /></g><g className="stick-arm arm-reach"><path d="M0 5l28 4" /></g><g className="stick-leg leg-left"><path d="M0 58-25 95" /></g><g className="stick-leg leg-right"><path d="M0 58 25 95" /></g>{happy ? <path className="gag gag-wiggle" d="M18 42c8 4 6 12-2 10" /> : null}
+          <path className="stick-torso" d="M0-12V58" />
+          <g className="stick-arm arm-left" style={limbStyle(swing)}><path d="M0 5-24 19" /></g>
+          <g className="stick-arm arm-right" style={limbStyle(oppositeSwing)}><path d="M0 5l24 19" /></g>
+          <g className="stick-arm arm-celebrate-l"><path d="M0 4-26-18" /></g><g className="stick-arm arm-celebrate-r"><path d="M0 4l26-18" /></g><g className="stick-arm arm-sip"><path d="M0 5l17-22" /></g><g className="stick-arm arm-reach"><path d="M0 5l28 4" /></g>
+          <g className="stick-leg leg-left" style={limbStyle(oppositeSwing)}><path d="M0 58-25 95" /></g>
+          <g className="stick-leg leg-right" style={limbStyle(swing)}><path d="M0 58 25 95" /></g>
+          {happy ? <path className="gag gag-wiggle" d="M18 42c8 4 6 12-2 10" /> : null}
         </g></g>
       </g>
     </g>
@@ -67,6 +82,6 @@ export function DoodleScene({ scene, t, playing }: { scene: StoryScene; t: numbe
     {scene.environment.kind === "street" && <><path className="set-piece" d="M34 260V106l55-37 58 37v154M45 124h34v36H45M101 124h34v36h-34" /><path className="motion-line" d="M322 104h86m-67 18h86" /></>}
     {scene.environment.kind === "cafe" && <path className="set-piece" d="M36 260V87h118v173M36 104h118M58 132h75M376 260V85h70v175M390 108h43" />}
     {scene.environment.kind === "open" && <path className="set-piece" d="M65 259q11-52 28 0m-15-17 15-9m-11-8-10-8M408 259q13-68 31 0m-17-25 18-11" />}
-    <SceneEffects effects={frame.effects} frame={frame} />{frame.objects.map((object) => <DoodleProp key={object.id} object={object} />)}{frame.actors.map((actor) => <StickFigure key={actor.id} actor={actor} />)}
+    <SceneEffects effects={frame.effects} frame={frame} />{frame.objects.map((object) => <DoodleProp key={object.id} object={object} />)}{frame.actors.map((actor) => <StickFigure key={actor.id} actor={actor} t={t} />)}
   </g></svg>;
 }
