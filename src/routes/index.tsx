@@ -23,14 +23,15 @@ const moods: Array<{ label: Mood; icon: string; note: string }> = [
   { label: "Motivational", icon: "↗", note: "Find the spark" }, { label: "Calm", icon: "~", note: "Keep it peaceful" },
 ];
 
+const defaultPrompt = "I woke up late, spilled my coffee, and still made it to the meeting with one minute to spare.";
 const prompts = [
-  "I woke up late, spilled my coffee, and still made it to the meeting with one minute to spare.",
+  defaultPrompt,
   "After a difficult morning, I took a long walk and noticed the first flowers of spring.",
   "I finally finished the project I kept putting off. It wasn't perfect, but it was mine.",
 ];
 
 function Index() {
-  const [entry, setEntry] = useState(prompts[0]);
+  const [entry, setEntry] = useState(defaultPrompt);
   const [mood, setMood] = useState<Mood>("Funny");
   const [story, setStory] = useState<Storyboard | null>(null);
   const [sceneIndex, setSceneIndex] = useState(0);
@@ -80,7 +81,7 @@ function Index() {
             <div className="paper-holes" aria-hidden="true">{Array.from({ length: 6 }, (_, i) => <i key={i}/>)}</div>
             <label htmlFor="journal" className="font-display text-2xl font-bold">What happened today?</label>
             <textarea id="journal" value={entry} maxLength={900} onChange={(event) => setEntry(event.target.value)} placeholder="It all started when…" className="journal-input"/>
-            <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground"><button className="font-bold hover:text-foreground" onClick={() => setEntry(prompts[(prompts.indexOf(entry) + 1 + prompts.length) % prompts.length])} type="button"><Dices className="mr-1 inline" size={14}/>Try an example</button><span>{wordCount} words</span></div>
+            <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground"><button className="font-bold hover:text-foreground" onClick={() => setEntry(prompts[(prompts.indexOf(entry) + 1 + prompts.length) % prompts.length] ?? defaultPrompt)} type="button"><Dices className="mr-1 inline" size={14}/>Try an example</button><span>{wordCount} words</span></div>
             <fieldset className="mt-7"><legend className="mb-3 font-display text-lg font-bold">Choose the mood</legend><div className="grid grid-cols-2 gap-2 sm:grid-cols-4">{moods.map((item) => <button key={item.label} type="button" aria-pressed={mood === item.label} onClick={() => setMood(item.label)} className={`mood-button ${mood === item.label ? "is-selected" : ""}`}><span className="text-2xl">{item.icon}</span><strong>{item.label}</strong><small>{item.note}</small></button>)}</div></fieldset>
             <Button className="mt-7 w-full" onClick={createStory} disabled={!entry.trim()}><Sparkles size={18}/>Doodle my story</Button>
             <p className="mt-3 text-center text-xs text-muted-foreground">Made in your browser. Your words stay with you.</p>
