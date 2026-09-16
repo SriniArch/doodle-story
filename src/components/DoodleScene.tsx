@@ -21,8 +21,7 @@ function DoodleProp({ object }: { object: ObjectFrame }) {
 
 function StickFigure({ actor, t }: { actor: ActorFrame; t: number }) {
   const isWalking = actor.pose === "walk" || actor.pose === "run";
-  // One engine-driven gait phase controls both arms and both legs.
-  // This intentionally replaces independent CSS clocks for the walking limbs.
+  // Walking is a single engine-driven gait: arms and legs share exactly one phase.
   const cycleMs = actor.pose === "run" ? 220 : 360;
   const phase = ((t % cycleMs) / cycleMs) * Math.PI * 2;
   const swing = Math.sin(phase) * (actor.pose === "run" ? 32 : 24);
@@ -34,10 +33,10 @@ function StickFigure({ actor, t }: { actor: ActorFrame; t: number }) {
   const showHearts = actor.feeling === "happy" && actor.pose === "celebrate";
   const happy = actor.feeling === "happy" || actor.expression === "smile" || actor.expression === "soft";
   const face = actor.feeling === "surprise" ? "surprised" : actor.expression;
-
   const limbStyle = (rotation: number) => isWalking ? { transform: `rotate(${rotation}deg)` } : undefined;
+  const cssPose = isWalking ? "walk-engine" : actor.pose;
 
-  return <g className="actor" data-pose={actor.pose} data-feeling={actor.feeling ?? "none"} data-face={face} style={{ opacity: actor.opacity }}>
+  return <g className="actor" data-pose={cssPose} data-feeling={actor.feeling ?? "none"} data-face={face} style={{ opacity: actor.opacity }}>
     <g className="actor-movement" transform={`translate(${actor.x} ${actor.y}) scale(${actor.facing * actor.scale} ${actor.scale})`}>
       <g className="actor-ground-correction" transform={`translate(0 ${isWalking ? -57 - bob : -57})`}>
         <g className="actor-body-motion"><g className="actor-react">
