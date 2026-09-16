@@ -4,6 +4,8 @@ import { sampleFrame, type ActorFrame, type EffectFrame, type FrameState, type O
 import type { EntityKind } from "@/engine/schema";
 import type { StoryScene } from "@/lib/storyboard";
 
+let lastSceneLogAt = 0;
+
 function DoodleProp({ object }: { object: ObjectFrame }) {
   const name = object.kind as EntityKind;
   const { x, y, fx } = object;
@@ -39,17 +41,23 @@ function StickFigure({ actor }: { actor: ActorFrame }) {
 
 function SceneEffects({ effects, frame }: { effects: EffectFrame[]; frame: FrameState }) {
   return <g className="scene-gags">{effects.map((effect) => { const parent = frame.actors.find((actor) => actor.id === effect.parent) ?? frame.objects.find((object) => object.id === effect.parent); const x = parent?.x ?? effect.x; const y = parent?.y ?? effect.y;
-    if (effect.kind === "papers") return <g key={effect.id} className="gag gag-papers is-on" transform={`translate(${x} ${y - 40})"><path d="M-18-8h22l-3 18h-22z" /><path d="M8-2h20l4 16h-22z" /></g>;
-    if (effect.kind === "spark") return <g key={effect.id} className="gag gag-spark is-on" transform={`translate(${x - 250} ${y - 165})"><path d="M250 42l4 10 10 3-8 7 2 11-8-6-8 6 2-11-8-7 10-3z" /></g>;
-    if (effect.kind === "speech") return <g key={effect.id} className="gag gag-speech is-on" transform={`translate(${x + 36} ${y - 70})"><path d="M0 0h84v36H18L8 48z" /><text className="gag-text" x="12" y="24">{effect.text ?? "!"}</text></g>;
+    if (effect.kind === "papers") return <g key={effect.id} className="gag gag-papers is-on" transform={`translate(${x} ${y - 40})`}><path d="M-18-8h22l-3 18h-22z" /><path d="M8-2h20l4 16h-22z" /></g>;
+    if (effect.kind === "spark") return <g key={effect.id} className="gag gag-spark is-on" transform={`translate(${x - 250} ${y - 165})`}><path d="M250 42l4 10 10 3-8 7 2 11-8-6-8 6 2-11-8-7 10-3z" /></g>;
+    if (effect.kind === "speech") return <g key={effect.id} className="gag gag-speech is-on" transform={`translate(${x + 36} ${y - 70})`}><path d="M0 0h84v36H18L8 48z" /><text className="gag-text" x="12" y="24">{effect.text ?? "!"}</text></g>;
     if (effect.kind === "question") return <text key={effect.id} className="gag-text gag-mark is-on" x={x + 28} y={y - 70}>?</text>;
-    if (effect.kind === "smoke") return <g key={effect.id} className="gag gag-smoke is-on" transform={`translate(${x} ${y - 30})"><path d="M0 0c-8-12 8-14 0-24M10 4c-6-10 8-12 2-20" /></g>;
+    if (effect.kind === "smoke") return <g key={effect.id} className="gag gag-smoke is-on" transform={`translate(${x} ${y - 30})`}><path d="M0 0c-8-12 8-14 0-24M10 4c-6-10 8-12 2-20" /></g>;
     return null;
   })}</g>;
 }
 
 export function DoodleScene({ scene, t, playing }: { scene: StoryScene; t: number; playing: boolean }) {
   const frame = sampleFrame(scene, t); const primary = frame.actors[0];
+  // #region agent log
+  if (Date.now() - lastSceneLogAt > 400) {
+    lastSceneLogAt = Date.now();
+    fetch('http://127.0.0.1:7450/ingest/0a73e971-f1fb-419a-b960-f3568ea72850',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'c2e5f8'},body:JSON.stringify({sessionId:'c2e5f8',runId:'post-fix',hypothesisId:'A',location:'DoodleScene.tsx:DoodleScene',message:'scene sampled after SceneEffects parse fix',data:{sceneId:scene.id,t,playing,effectCount:frame.effects.length,effectKinds:frame.effects.map((effect)=>effect.kind),actorCount:frame.actors.length},timestamp:Date.now()})}).catch(()=>{});
+  }
+  // #endregion
   const classes = ["doodle-canvas", `action-${scene.action}`, `face-${scene.expression}`, `set-${scene.setting}`, "is-animating", playing ? "is-playing" : "is-paused"].join(" ");
   return <svg className={classes} viewBox="0 0 500 300" role="img" aria-label={`Animated scene: ${scene.caption}`} data-pose={primary?.pose ?? "idle"} data-feeling={primary?.feeling ?? "none"} style={{ "--scene-ms": `${scene.durationMs}ms` } as CSSProperties}><g className="doodle-lines">
     <path className="ground-line set-piece" d="M28 261q91-5 184 0t260-1" />
