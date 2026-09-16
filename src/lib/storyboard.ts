@@ -1,11 +1,13 @@
 export type Mood = "Funny" | "Emotional" | "Motivational" | "Calm";
 export type PropName = "clock" | "bed" | "coffee" | "laptop" | "car" | "sun" | "plant" | "star";
+export type SceneAction = "wake" | "work" | "walk" | "sip" | "celebrate" | "reflect";
+export type SceneExpression = "smile" | "sleepy" | "surprised" | "focused" | "soft" | "happy" | "worried";
 
 export type StoryScene = {
   id: number;
   setting: "bedroom" | "desk" | "street" | "cafe" | "open";
-  action: "wake" | "work" | "walk" | "sip" | "celebrate" | "reflect";
-  expression: "smile" | "sleepy" | "surprised" | "focused" | "soft";
+  action: SceneAction;
+  expression: SceneExpression;
   props: PropName[];
   caption: string;
   duration: number;
@@ -45,8 +47,8 @@ export function generateStoryboard(entry: string, mood: Mood): Storyboard {
   const count = Math.min(6, Math.max(4, sentences.length + 2));
   const fragments = sentences.length ? sentences : ["Today had a story hiding in it"];
   const settings = ["bedroom", "desk", "street", "cafe", "open", "open"] as const;
-  const actions = ["wake", "work", "walk", "sip", "reflect", "celebrate"] as const;
-  const expressions = ["sleepy", "focused", "surprised", "soft", "smile", "smile"] as const;
+  const actions: SceneAction[] = ["wake", "work", "walk", "sip", "reflect", "celebrate"];
+  const expressions: SceneExpression[] = ["sleepy", "focused", "surprised", "worried", "happy", "smile"];
 
   const scenes: StoryScene[] = Array.from({ length: count }, (_, index) => {
     const isLast = index === count - 1;
@@ -59,11 +61,13 @@ export function generateStoryboard(entry: string, mood: Mood): Storyboard {
     const firstProp = props[index % props.length] ?? "sun";
     const secondProp = index === 2 ? "plant" : (props[(index + 1) % props.length] ?? "coffee");
     const sceneProps: PropName[] = isLast ? ["star"] : [firstProp, secondProp];
+    const lastAction: SceneAction = mood === "Motivational" || mood === "Funny" ? "celebrate" : "reflect";
+    const lastExpression: SceneExpression = mood === "Emotional" ? "soft" : "happy";
     return {
       id: index + 1,
       setting: settings[index] ?? "open",
-      action: isLast ? (mood === "Motivational" || mood === "Funny" ? "celebrate" : "reflect") : (actions[index] ?? "reflect"),
-      expression: isLast ? "smile" : (expressions[index] ?? "soft"),
+      action: isLast ? lastAction : (actions[index] ?? "reflect"),
+      expression: isLast ? lastExpression : (expressions[index] ?? "soft"),
       props: [...new Set(sceneProps)],
       caption,
       duration: 3800,

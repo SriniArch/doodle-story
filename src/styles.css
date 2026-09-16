@@ -153,6 +153,61 @@
 @keyframes doodle-bob { 0%,100% { transform: translate(250px,165px) rotate(-1deg); } 50% { transform: translate(250px,160px) rotate(1deg); } }
 @keyframes doodle-drift { 0%,100% { transform: translateX(0); } 50% { transform: translateX(8px); } }
 @keyframes doodle-pop { 0% { opacity: 0; transform: scale(.7); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes scene-fade { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes scene-slide { 0% { opacity: 0; transform: translateX(28px); } 100% { opacity: 1; transform: translateX(0); } }
+@keyframes scene-zoom { 0% { opacity: 0; transform: scale(1.04); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes actor-enter-exit {
+  0% { transform: translate(70px,165px); }
+  12% { transform: translate(250px,165px); }
+  84% { transform: translate(250px,165px); }
+  100% { transform: translate(430px,165px); }
+}
+@keyframes actor-enter-stay {
+  0% { transform: translate(70px,165px); }
+  12%,100% { transform: translate(250px,165px); }
+}
+@keyframes actor-breathe { 0%,100% { transform: scale(1,1) rotate(-.6deg); } 50% { transform: scale(1.02,.97) rotate(.7deg); } }
+@keyframes actor-walk-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes head-idle { 0%,100% { transform: rotate(-2deg); } 50% { transform: rotate(3deg); } }
+@keyframes blink { 0%,88%,100% { transform: scaleY(1); } 92% { transform: scaleY(.08); } }
+@keyframes swing-arm-l { 0%,100% { transform: rotate(16deg); } 50% { transform: rotate(-18deg); } }
+@keyframes swing-arm-r { 0%,100% { transform: rotate(-16deg); } 50% { transform: rotate(18deg); } }
+@keyframes swing-leg-l { 0%,100% { transform: rotate(16deg); } 50% { transform: rotate(-14deg); } }
+@keyframes swing-leg-r { 0%,100% { transform: rotate(-16deg); } 50% { transform: rotate(14deg); } }
+@keyframes sip-raise { 0%,14% { transform: rotate(20deg); } 28%,48% { transform: rotate(-78deg); } 60%,100% { transform: rotate(8deg); } }
+@keyframes celebrate-wave { 0%,14% { transform: rotate(0); } 22% { transform: rotate(-12deg); } 40% { transform: rotate(10deg); } 55% { transform: rotate(-8deg); } 70%,100% { transform: rotate(0); } }
+@keyframes work-lean { 0%,12% { transform: translate(0,0); } 28%,70% { transform: translate(10px,4px); } 82%,100% { transform: translate(0,0); } }
+@keyframes surprise-jump {
+  0%,52% { transform: translateY(0) scale(1); }
+  57% { transform: translateY(-16px) scale(1.08,.9); }
+  64% { transform: translateY(2px) scale(.95,1.08); }
+  72%,100% { transform: translateY(0) scale(1); }
+}
+@keyframes sleepy-nod { 0%,20% { transform: rotate(0); } 40%,58% { transform: rotate(12deg) translateY(4px); } 70%,100% { transform: rotate(-2deg); } }
+@keyframes happy-bounce { 0%,50% { transform: translateY(0); } 58% { transform: translateY(-10px); } 68% { transform: translateY(0); } 100% { transform: translateY(0); } }
+@keyframes worried-shake { 0%,50%,100% { transform: translateX(0); } 56% { transform: translateX(-4px); } 62% { transform: translateX(4px); } 68% { transform: translateX(-2px); } }
+@keyframes mouth-hide { 0%,48% { opacity: 1; } 56%,100% { opacity: 0; } }
+@keyframes mouth-show { 0%,48% { opacity: 0; transform: scale(.4); } 58% { opacity: 1; transform: scale(1.15); } 70%,100% { opacity: 1; transform: scale(1); } }
+@keyframes bang-pop { 0%,52% { opacity: 0; transform: scale(.3) rotate(-12deg); } 58% { opacity: 1; transform: scale(1.2) rotate(8deg); } 80% { opacity: 1; } 100% { opacity: .35; } }
+@keyframes zzz-float { 0%,10% { opacity: 0; transform: translate(0,8px); } 30% { opacity: 1; } 70% { opacity: .8; transform: translate(10px,-18px); } 100% { opacity: 0; transform: translate(16px,-28px); } }
+@keyframes sweat-drop { 0%,20% { opacity: 0; transform: translateY(-6px); } 40% { opacity: 1; transform: translateY(0); } 80% { opacity: .8; transform: translateY(10px); } 100% { opacity: 0; transform: translateY(16px); } }
+@keyframes heart-pop { 0%,55% { opacity: 0; transform: scale(.2); } 68% { opacity: 1; transform: scale(1.1) rotate(-8deg); } 100% { opacity: .6; transform: translateY(-8px) rotate(6deg); } }
+@keyframes coffee-tilt { 0%,18% { transform: rotate(0); } 30% { transform: rotate(24deg); } 38% { transform: rotate(18deg); } 52%,100% { transform: rotate(0); } }
+@keyframes coffee-steam { 0%,100% { transform: translateY(0); opacity: .85; } 50% { transform: translateY(-8px); opacity: .3; } }
+@keyframes coffee-spill { 0%,24% { opacity: 0; transform: translate(0,-6px) scale(.4); } 32% { opacity: 1; transform: translate(6px,8px) scale(1); } 70% { opacity: .7; transform: translate(10px,28px); } 100% { opacity: 0; transform: translate(12px,38px); } }
+@keyframes laptop-lid { 0%,8% { transform: scaleY(.18); } 22%,68% { transform: scaleY(1); } 84%,100% { transform: scaleY(.22); } }
+@keyframes clock-ring { 0%,12% { transform: rotate(0); } 16% { transform: rotate(-14deg); } 20% { transform: rotate(14deg); } 24% { transform: rotate(-10deg); } 28% { transform: rotate(8deg); } 36%,100% { transform: rotate(0); } }
+@keyframes clock-hands { 0% { transform: rotate(0); } 100% { transform: rotate(28deg); } }
+@keyframes sun-spin { 0% { transform: rotate(0); } 100% { transform: rotate(12deg); } }
+@keyframes plant-sway { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(5deg); } }
+@keyframes car-bounce { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-5px) rotate(1deg); } }
+@keyframes wheel-spin { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
+@keyframes bed-fluff { 0%,100% { transform: scaleX(1); } 50% { transform: scaleX(1.08) translateY(-1px); } }
+@keyframes star-twinkle { 0%,100% { transform: rotate(-6deg) scale(.92); } 50% { transform: rotate(8deg) scale(1.08); } }
+@keyframes phone-buzz { 0%,40%,100% { transform: rotate(0); } 44% { transform: rotate(-10deg) translateX(-3px); } 48% { transform: rotate(10deg) translateX(3px); } 52% { transform: rotate(-8deg); } 58% { transform: rotate(0); } }
+@keyframes papers-mess { 0%,25% { transform: rotate(-2deg); } 40% { transform: rotate(12deg) translate(8px,-6px); } 100% { transform: rotate(18deg) translate(14px,4px); } }
+@keyframes spark-pop { 0%,60% { opacity: 0; transform: scale(.3); } 72% { opacity: 1; transform: scale(1.15); } 100% { opacity: .7; transform: scale(1) rotate(12deg); } }
+@keyframes set-wobble { 0%,100% { transform: rotate(-.4deg); } 50% { transform: rotate(.5deg); } }
 
 @layer base {
   button { cursor: pointer; }
@@ -175,12 +230,105 @@
 .story-stage { border:2px solid var(--foreground); border-radius:4px; background:var(--card); box-shadow:8px 8px 0 color-mix(in oklab,var(--foreground) 12%,transparent); overflow:hidden; }
 .stage-top { display:flex; justify-content:space-between; align-items:center; padding:.8rem 1.2rem; border-bottom:2px solid var(--foreground); font-size:.72rem; font-weight:800; letter-spacing:.12em; }
 .mood-stamp { border:1.5px solid var(--primary); border-radius:50%; padding:.25rem .8rem; color:var(--accent-foreground); transform:rotate(3deg); font-family:var(--font-hand); font-size:.9rem; letter-spacing:0; }
-.scene-frame { min-height:340px; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at center,var(--background),var(--card)); animation:doodle-pop .35s ease-out; }
-.doodle-canvas { width:min(100%,780px); height:auto; color:var(--foreground); overflow:visible; }
+.scene-frame { min-height:340px; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at center,var(--background),var(--card)); }
+.scene-frame.trans-bedroom, .scene-frame.trans-cafe { animation:scene-fade .45s ease-out; }
+.scene-frame.trans-street { animation:scene-slide .5s ease-out; }
+.scene-frame.trans-desk, .scene-frame.trans-open { animation:scene-zoom .42s ease-out; }
+.doodle-canvas { width:min(100%,780px); height:auto; color:var(--foreground); overflow:visible; --scene-ms:3800ms; }
 .doodle-lines, .doodle-lines * { fill:none; stroke:currentColor; stroke-width:3.1; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
 .doodle-lines .doodle-fill { fill:currentColor; stroke:none; }
-.doodle-canvas.is-playing .stick-person { animation:doodle-bob 1.2s ease-in-out infinite; }
-.doodle-canvas.is-playing .motion-line { animation:doodle-drift .8s ease-in-out infinite; }
+.doodle-lines .gag-text { fill:currentColor; stroke:none; font-family:var(--font-hand); font-size:18px; }
+.actor { transform:translate(250px,165px); }
+.actor-bob, .actor-react, .stick-head, .stick-arm, .stick-leg, .stick-eyes .eye, .prop, .gag, .set-piece { transform-box:fill-box; transform-origin:center; }
+.stick-arm { transform-origin:0px 5px; }
+.stick-leg { transform-origin:0px 58px; }
+.laptop-lid { transform-box:fill-box; transform-origin:bottom center; }
+.plant-leaf, .sun-spin, .car-wheel, .clock-body, .clock-hands, .coffee-cup { transform-box:fill-box; transform-origin:center; }
+.arm-celebrate-l, .arm-celebrate-r, .arm-sip { display:none; }
+.doodle-canvas.action-celebrate .arm-left, .doodle-canvas.action-celebrate .arm-right { display:none; }
+.doodle-canvas.action-celebrate .arm-celebrate-l, .doodle-canvas.action-celebrate .arm-celebrate-r { display:inline; }
+.doodle-canvas.action-sip .arm-right { display:none; }
+.doodle-canvas.action-sip .arm-sip { display:inline; }
+.mouth { opacity:0; }
+.doodle-canvas.face-surprised .mouth-surprised,
+.doodle-canvas.face-smile .mouth-smile,
+.doodle-canvas.face-happy .mouth-smile,
+.doodle-canvas.face-soft .mouth-smile,
+.doodle-canvas.face-sleepy .mouth-sleepy,
+.doodle-canvas.face-focused .mouth-focused,
+.doodle-canvas.face-worried .mouth-worried { opacity:1; }
+.gag-bang, .gag-zzz, .gag-sweat, .gag-hearts, .gag-papers, .gag-phone, .gag-spark, .coffee-drops, .clock-rings { opacity:0; }
+.doodle-canvas.is-animating .actor { animation:actor-enter-exit var(--scene-ms) ease-in-out both; }
+.doodle-canvas.is-animating.action-celebrate .actor,
+.doodle-canvas.is-animating.action-reflect .actor { animation:actor-enter-stay var(--scene-ms) ease-in-out both; }
+.doodle-canvas.is-animating .actor-bob { animation:actor-breathe 1.8s ease-in-out .45s infinite; }
+.doodle-canvas.is-animating.action-walk .actor-bob { animation:actor-walk-bob .32s ease-in-out infinite; }
+.doodle-canvas.is-animating .stick-head { animation:head-idle 2.4s ease-in-out .4s infinite; }
+.doodle-canvas.is-animating.face-sleepy .stick-head { animation:sleepy-nod var(--scene-ms) ease-in-out both; }
+.doodle-canvas.is-animating.face-surprised .actor-react { animation:surprise-jump var(--scene-ms) ease-in-out both; }
+.doodle-canvas.is-animating.face-happy .actor-react,
+.doodle-canvas.is-animating.face-smile .actor-react { animation:happy-bounce var(--scene-ms) ease-in-out both; }
+.doodle-canvas.is-animating.face-worried .actor-react { animation:worried-shake var(--scene-ms) ease-in-out both; }
+.doodle-canvas.is-animating.action-work .actor-react { animation:work-lean var(--scene-ms) ease-in-out both; }
+.doodle-canvas.is-animating .stick-eyes .eye { transform-origin:center; animation:blink 3.1s ease-in-out .6s infinite; }
+.doodle-canvas.is-animating .arm-left, .doodle-canvas.is-animating .arm-celebrate-l { animation:swing-arm-l .34s ease-in-out 6; }
+.doodle-canvas.is-animating .arm-right, .doodle-canvas.is-animating .arm-celebrate-r { animation:swing-arm-r .34s ease-in-out 6; }
+.doodle-canvas.is-animating .leg-left { animation:swing-leg-l .34s ease-in-out 6; }
+.doodle-canvas.is-animating .leg-right { animation:swing-leg-r .34s ease-in-out 6; }
+.doodle-canvas.is-animating.action-walk .arm-left { animation:swing-arm-l .32s ease-in-out infinite; }
+.doodle-canvas.is-animating.action-walk .arm-right { animation:swing-arm-r .32s ease-in-out infinite; }
+.doodle-canvas.is-animating.action-walk .leg-left { animation:swing-leg-l .32s ease-in-out infinite; }
+.doodle-canvas.is-animating.action-walk .leg-right { animation:swing-leg-r .32s ease-in-out infinite; }
+.doodle-canvas.is-animating.action-sip .arm-sip { animation:sip-raise var(--scene-ms) ease-in-out both; }
+.doodle-canvas.is-animating.action-celebrate .arm-celebrate-l,
+.doodle-canvas.is-animating.action-celebrate .arm-celebrate-r { animation:celebrate-wave var(--scene-ms) ease-in-out both; }
+.doodle-canvas.is-animating.face-surprised .mouth-sleepy { opacity:1; animation:mouth-hide var(--scene-ms) both; }
+.doodle-canvas.is-animating.face-surprised .mouth-surprised { animation:mouth-show var(--scene-ms) both; }
+.doodle-canvas.is-animating .gag-bang { animation:bang-pop var(--scene-ms) ease-out both; }
+.doodle-canvas.is-animating .gag-zzz { animation:zzz-float var(--scene-ms) ease-out both; }
+.doodle-canvas.is-animating .gag-sweat { animation:sweat-drop var(--scene-ms) ease-in both; }
+.doodle-canvas.is-animating .gag-hearts { animation:heart-pop var(--scene-ms) ease-out both; }
+.doodle-canvas.is-animating .gag-spark { animation:spark-pop var(--scene-ms) ease-out both; }
+.doodle-canvas.is-animating .gag-phone { opacity:1; animation:phone-buzz var(--scene-ms) ease-in-out both; }
+.doodle-canvas.is-animating .gag-papers { opacity:1; animation:papers-mess var(--scene-ms) ease-in-out both; }
+.doodle-canvas.is-animating .prop-coffee .coffee-cup { animation:coffee-tilt var(--scene-ms) ease-in-out both; }
+.doodle-canvas.is-animating .coffee-steam { animation:coffee-steam 1.4s ease-in-out infinite; }
+.doodle-canvas.is-animating .coffee-drops { animation:coffee-spill var(--scene-ms) ease-in both; }
+.doodle-canvas.is-animating .laptop-lid { animation:laptop-lid var(--scene-ms) ease-in-out both; }
+.doodle-canvas.is-animating .prop-clock .clock-body { animation:clock-ring var(--scene-ms) ease-in-out both; }
+.doodle-canvas.is-animating .clock-hands { transform-origin:center; animation:clock-hands var(--scene-ms) linear both; }
+.doodle-canvas.is-animating .clock-rings { animation:bang-pop var(--scene-ms) ease-out both; }
+.doodle-canvas.is-animating .sun-spin { animation:sun-spin 3.2s ease-in-out infinite alternate; }
+.doodle-canvas.is-animating .plant-leaf { animation:plant-sway 1.8s ease-in-out infinite; }
+.doodle-canvas.is-animating .leaf-b { animation-delay:.25s; }
+.doodle-canvas.is-animating .prop-car { animation:car-bounce 1s ease-in-out infinite; }
+.doodle-canvas.is-animating .car-wheel { animation:wheel-spin 1.1s linear infinite; }
+.doodle-canvas.is-animating .bed-pillow { transform-origin:center; animation:bed-fluff 1.6s ease-in-out infinite; }
+.doodle-canvas.is-animating .prop-star { animation:star-twinkle 1.1s ease-in-out infinite; }
+.doodle-canvas.is-animating .motion-line { animation:doodle-drift .8s ease-in-out infinite; }
+.doodle-canvas.is-animating .set-piece { animation:set-wobble 2.6s ease-in-out infinite; }
+.doodle-canvas.is-paused .actor,
+.doodle-canvas.is-paused .actor-bob,
+.doodle-canvas.is-paused .actor-react,
+.doodle-canvas.is-paused .stick-head,
+.doodle-canvas.is-paused .stick-arm,
+.doodle-canvas.is-paused .stick-leg,
+.doodle-canvas.is-paused .stick-eyes .eye,
+.doodle-canvas.is-paused .mouth,
+.doodle-canvas.is-paused .prop,
+.doodle-canvas.is-paused .gag,
+.doodle-canvas.is-paused .set-piece,
+.doodle-canvas.is-paused .motion-line,
+.doodle-canvas.is-paused .laptop-lid,
+.doodle-canvas.is-paused .coffee-cup,
+.doodle-canvas.is-paused .coffee-steam,
+.doodle-canvas.is-paused .coffee-drops,
+.doodle-canvas.is-paused .clock-body,
+.doodle-canvas.is-paused .clock-hands,
+.doodle-canvas.is-paused .sun-spin,
+.doodle-canvas.is-paused .plant-leaf,
+.doodle-canvas.is-paused .car-wheel,
+.doodle-canvas.is-paused .bed-pillow { animation-play-state:paused; }
 .doodle-star { transform-box:fill-box; transform-origin:center; animation:doodle-pop .6s ease-out both; }
 .caption-wrap { min-height:112px; display:flex; align-items:center; justify-content:center; border-top:2px dashed var(--border); padding:1.2rem 2rem; text-align:center; }
 .progress-track { height:5px; background:var(--secondary); }.progress-track i { display:block; height:100%; background:var(--primary); transition:width .35s ease; }

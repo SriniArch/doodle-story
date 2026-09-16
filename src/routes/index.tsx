@@ -36,6 +36,7 @@ function Index() {
   const [story, setStory] = useState<Storyboard | null>(null);
   const [sceneIndex, setSceneIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [playNonce, setPlayNonce] = useState(0);
   const stageRef = useRef<HTMLDivElement>(null);
 
   const current = story?.scenes[sceneIndex];
@@ -55,11 +56,12 @@ function Index() {
     if (!entry.trim()) return;
     setStory(generateStoryboard(entry, mood));
     setSceneIndex(0);
+    setPlayNonce((value) => value + 1);
     setPlaying(true);
     window.setTimeout(() => stageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
   };
 
-  const replay = () => { setSceneIndex(0); setPlaying(true); };
+  const replay = () => { setSceneIndex(0); setPlayNonce((value) => value + 1); setPlaying(true); };
 
   return (
     <main className="min-h-screen overflow-hidden bg-background">
@@ -96,7 +98,7 @@ function Index() {
 
           <div className="story-stage">
             <div className="stage-top"><span>SCENE {sceneIndex + 1} / {story.scenes.length}</span><span className="mood-stamp">{story.mood}</span></div>
-            <div className="scene-frame" key={current.id}><DoodleScene scene={current} active={playing}/></div>
+            <div className={`scene-frame trans-${current.setting}`} key={`${current.id}-${playNonce}`}><DoodleScene scene={current} active={playing}/></div>
             <div className="caption-wrap"><p className="font-hand text-2xl leading-relaxed md:text-3xl">“{current.caption}”</p></div>
             <div className="progress-track" aria-label={`Scene ${sceneIndex + 1} of ${story.scenes.length}`}><i style={{ width: `${progress}%` }}/></div>
             <div className="playback-row">
