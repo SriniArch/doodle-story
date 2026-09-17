@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { DoodleScene } from "@/components/DoodleScene";
+import { V2DoodleScene } from "@/components/V2DoodleScene";
 import { Button } from "@/components/ui/button";
 import { usePlaybackClock } from "@/engine/clock";
 import { PHASE1_STORIES } from "@/engine/fixtures";
@@ -216,7 +216,7 @@ function Index() {
               className={`scene-frame scene-trans scene-trans-${transition} trans-${current.setting}`}
               key={`${current.id}-${clock.replayEpoch}`}
             >
-              <DoodleScene scene={current} t={clock.t} playing={clock.playing} />
+              <V2DoodleScene scene={current} t={clock.t} />
             </div>
             <div className="caption-wrap">
               <p className="font-hand text-2xl leading-relaxed md:text-3xl">“{current.caption}”</p>
